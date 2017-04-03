@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<listener>  
+	    <listener-class>cc.it120.www.servletFreemarker.init.InitWeb</listener-class>  
+	</listener>  
+	<servlet>
+		<servlet-name>freemarker</servlet-name>
+		<servlet-class>cc.it120.www.servletFreemarker.FreemarkerServlet</servlet-class>
+		<!-- http://freemarker.org/docs/pgui_misc_servlet.html -->
+		<init-param>
+			<param-name>TemplatePath</param-name>
+			<param-value>/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>classic_compatible</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>locale</param-name>
+			<param-value>zh_CN</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ContentType</param-name>
+			<param-value>text/html;charset=UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>template_update_delay</param-name>
+			<param-value>0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>default_encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>url_escaping_charset</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>datetime_format</param-name>
+			<param-value>yyyy-MM-dd HH:mm:ss</param-value>
+		</init-param>
+		<init-param>
+			<param-name>date_format</param-name>
+			<param-value>yyyy-MM-dd</param-value>
+		</init-param>
+		<init-param>
+			<param-name>time_format</param-name>
+			<param-value>HH:mm:ss</param-value>
+		</init-param>
+		<init-param>
+			<param-name>number_format</param-name>
+			<param-value>0.######</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>	
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>freemarker</servlet-name>
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>	
+</web-app>

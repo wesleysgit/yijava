@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>易框架</title>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<h1>易框架 <small>V 1.0.0</small></h1>
+		<blockquote>
+		  <p>轻量级JAVA开发框架，整个框架部署war包只有1.8MB，但是功能并不逊色</p>
+		  <p>有接口，即可极速建站，无需数据库，无需 JAVA 编程基础，甚至可以 0 代码即可制作精美的PC或者手机端网站。</p>
+		  <footer><a href="https://github.com/gooking/yijava" target="_blank">https://github.com/gooking/yijava</a></footer>
+		</blockquote>
+		<h2>页面上支持的标签</h2>
+		<blockquote>
+		  <p>将任意现有的 html 静态页面，放到网站根目录以后，在页面中添加标签，即可显示对应的内容</p>
+		  <p>100% 支持 freemarker 标签，无需改动任何代码</p>
+		</blockquote>
+		<h2>版权信息</h2>
+		<blockquote>
+		  <p>易框架遵循Apache2开源协议发布，并提供免费使用。</p>
+		  <p>同时也欢迎您加入到该项目的开发中来，贡献您的一份力量，通过上面的  Github 链接加入 ~ </p>
+		  <p>可通过邮件联系到我: javazj@qq.com</p>
+		</blockquote>
+		<h2>目录结构</h2>
+		<pre>
+根目录
+├─WEB-INF
+│  ├─web.xml
+│  ├─lib
+│  ├─classes
+│  │  ├─apis.properties
+│  │  └─ ...
+		</pre>
+		<h2>apis.properties 配置文件</h2>
+		<pre>
+{
+  version:"0.0.1",
+  apis:[
+    {
+      name:"mobileSegment",
+      url:"https://api.it120.cc/common/mobile-segment/location",
+      method:"get",
+      connectTimeout:30000,
+      readTimeout:30000,
+      params:"",
+      returnType:"json"
+    }
+  ]
+}
+		</pre>
+		<div class="alert alert-success" role="alert">参数介绍 【详见下面的例子】</div>
+		<ul>
+		  <li>
+				<p>version</p>
+				<code><p>可不写，后期预留扩展</p></code>
+			</li>
+		  <li>
+				<p>apis</p>
+				<code>
+					<p>这里添加外部接口，指定的 name 参数可直接在页面上进行调用，方便您将接口集成</p>
+					<p>可添加任意数量的接口信息， {} 区域为一个完整的接口，多个接口用英文逗号分隔 </p>
+				</code>
+			</li>
+		  <li>
+				<p>name</p>
+				<code>
+					<p>您可以随意命名，代表当前接口的名字，便于后期在 HTML 页面中直接使用该接口的数据</p>
+				</code>
+			</li>
+		  <li>
+				<p>url</p>
+				<code>
+					<p>接口地址</p>
+				</code>
+			</li>
+		  <li>
+				<p>method</p>
+				<code>
+					<p>接口请求方式，目前支持 get、post、更多请求方式后期将会陆续添加 【不配置该参数，默认为 get】</p>
+				</code>
+			</li>
+		  <li>
+				<p>connectTimeout</p>
+				<code>
+					<p>接口连接超时毫秒 【不配置该参数，默认为 30000 （30秒）】</p>
+				</code>
+			</li>
+		  <li>
+				<p>readTimeout</p>
+				<code>
+					<p>接口获取数据超时毫秒 【不配置该参数，默认为 30000 （30秒）】</p>
+				</code>
+			</li>
+		  <li>
+				<p>params</p>
+				<code>
+					<p>接口参数，可将该接口每次请求都必须传递的参数写在这里，请求参数应该是 name1=value1&name2=value2 的形式 【可不配置该参数】</p>
+				</code>
+			</li>
+		  <li>
+				<p>returnType</p>
+				<code>
+					<p>接口返回的数据类型，目前支持 string、json、jsonArray ，分别代表：字符串、json对象、json对象的数组【不配置该参数，默认为 string】</p>
+				</code>
+			</li>
+		</ul>
+		<div class="alert alert-success" role="alert">多个接口配置例子</div>
+		<pre>
+{
+  version:"0.0.1",
+  apis:[
+    {
+      name:"mobileSegment",
+      url:"https://api.it120.cc/common/mobile-segment/location",
+      method:"get",
+      connectTimeout:30000,
+      readTimeout:30000,
+      params:"",
+      returnType:"json"
+    }
+  ]
+}
+		</pre>
+		<h2>页面上调用</h2>
+		<pre>将配置文件中的 name 放入 ${r"$"}{} 内，即可取得该接口的返回值，如： ${r"$"}{mobileSegment("提交的接口参数")}</pre>
+		<h2>应用示例：</h2>
+
+		<div class="alert alert-success" role="alert">string 返回类型</div>
+		<h3>接口配置：</h3>
+		<pre>
+{
+  name:"mobileSegmentString",
+  url:"https://api.it120.cc/common/mobile-segment/location",
+  returnType:"string"
+}
+		</pre>
+		<h3>页面调用：</h3>
+		<pre>${r"$"}{mobileSegmentString("mobile=13500000000")}</pre>
+		<h3>显示结果：</h3>
+		<pre>${mobileSegmentString("mobile=13500000000")}</pre>
+
+		<div class="alert alert-success" role="alert">json 返回类型</div>
+		<h3>接口配置：</h3>
+		<pre>
+{
+	name:"mobileSegment",
+	url:"https://api.it120.cc/common/mobile-segment/location",
+	returnType:"json"
+}
+		</pre>
+		<h3>页面调用：</h3>
+		<pre>${r"$"}{mobileSegment("mobile=13500000000").data.province} - ${r"$"}{mobileSegment("mobile=13500000000").data.segmentName}</pre>
+		<h3>显示结果：</h3>
+		<pre>${mobileSegment("mobile=13500000000").data.province} - ${mobileSegment("mobile=13500000000").data.segmentName}</pre>
+
+		<div class="alert alert-success" role="alert">显示所有省份数据</div>
+		<h3>接口配置：</h3>
+		<pre>
+{
+	name:"province",
+	url:"https://api.it120.cc/common/region/province",
+	returnType:"json"
+}
+		</pre>
+		<h3>页面调用：</h3>
+		<pre>
+&lt;ul class="list-inline"&gt;
+&lt;${r"#"}list province().data as p&gt;
+	&lt;li&gt;${r"$"}{p.name}&lt;/li&gt;
+&lt;/${r"#"}list&gt;
+&lt;/ul&gt;
+		</pre>
+		<h3>显示结果：</h3>
+		<code>
+			<ul class="list-inline">
+			<#list province().data as p>
+				<li>${p.name}</li>
+			</#list>
+			</ul>
+		</code>
+
+		<h2>立马试试吧</h2>
+		<ul>
+		  <li>
+				<p>JAVA运行环境</p>
+				<code>
+					<p>下载并安装 JDK1.8</p>
+					<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
+				</code>
+			</li>
+		  <li>
+				<p>安装 Tomcat</p>
+				<code>
+					<p><a href="http://tomcat.apache.org/download-80.cgi" target="_blank">http://tomcat.apache.org/download-80.cgi</a></p>
+				</code>
+			</li>
+		  <li>
+				<p>解压至 Tomcat 根目录</p>
+				<code>
+					<p>将框架文件解压缩到 Tomcat/webapp/ROOT 目录下</p>
+				</code>
+			</li>
+		  <li>
+				<p>运行 Tomcat</p>
+				<code>
+					<p>现在您可以通过运行 Tomcat 观看效果</p>
+					<p>赶快来动手试试看吧 ~ </p>
+					<p>PS: https://www.it120.cc/apis 上有一些建站需要的基础接口，试试看能否搭建一个您的站点出来 </p>
+				</code>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
