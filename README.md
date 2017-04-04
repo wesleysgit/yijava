@@ -6,3 +6,9 @@
 
 ## 下载正式版
 [https://github.com/gooking/yijava/releases](https://github.com/gooking/yijava/releases)
+
+
+## 案例
+
+博客系统
+[https://github.com/gooking/yijava-blog](https://github.com/gooking/yijava-blog)

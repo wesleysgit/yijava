@@ -34,7 +34,6 @@ public class HttpRequest {
 			connection.setConnectTimeout(connectTimeout);  
 			connection.setReadTimeout(readTimeout);  
 			
-			
 			// 建立实际的连接
 			connection.connect();
 			// 定义 BufferedReader输入流来读取URL的响应

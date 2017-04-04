@@ -26,13 +26,15 @@ public class InitWeb implements ServletContextListener {
 				build.append(line.trim());
 			}
 			JSONObject json = JSONObject.parseObject(build.toString());
+			BaseApiTemplateMethodModelEx.IS_DEBUG = json.getBooleanValue("debug");
 			JSONArray apis = json.getJSONArray("apis");
 			for (Object object : apis) {
 				JSONObject api = (JSONObject) object;
-				BaseApiTemplateMethodModelEx templateMethodModelEx = new BaseApiTemplateMethodModelEx(api);
+				BaseApiTemplateMethodModelEx templateMethodModelEx = new BaseApiTemplateMethodModelEx(api, json);
 				
 				FreemarkerServlet.FREEMARKER_EXT_METHODS.put(api.getString("name"), templateMethodModelEx);
 			}
+			FreemarkerServlet.REWRITE_ARRAYS = json.getJSONArray("rewrites");
 		} catch (Exception e) {
 			System.out.println("apis.properties 文件格式不正确，文件内容必须为 json 格式");
 			e.printStackTrace();

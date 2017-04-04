@@ -36,6 +36,10 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 		<init-param>
+			<param-name>defaultEncoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
 			<param-name>url_escaping_charset</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>

@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<h1>易框架 <small>V 1.0.0</small></h1>
+		<h1>易框架 <small>V 0.1.0</small></h1>
 		<blockquote>
 		  <p>轻量级JAVA开发框架，整个框架部署war包只有1.8MB，但是功能并不逊色</p>
 		  <p>有接口，即可极速建站，无需数据库，无需 JAVA 编程基础，甚至可以 0 代码即可制作精美的PC或者手机端网站。</p>
@@ -42,16 +42,50 @@
 		<h2>apis.properties 配置文件</h2>
 		<pre>
 {
-  version:"0.0.1",
+  version:"0.1.0",
+  debug:false,
+  domain:"api.it120.cc",
   apis:[
+  {
+    name:"mobileSegment",
+    url:"https://{domain}/common/mobile-segment/location",
+    method:"get",
+    connectTimeout:30000,
+    readTimeout:30000,
+    params:"",
+    returnType:"json"
+  },
+  {
+    name:"mobileSegmentString",
+    url:"https://{domain}/common/mobile-segment/location",
+    returnType:"string"
+  },
+  {
+    name:"province",
+    url:"https://{domain}/common/region/province",
+    returnType:"json"
+  }
+  ],
+  rewrites:[
     {
-      name:"mobileSegment",
-      url:"https://api.it120.cc/common/mobile-segment/location",
-      method:"get",
-      connectTimeout:30000,
-      readTimeout:30000,
-      params:"",
-      returnType:"json"
+      name:"category",
+      url:"/category/([^/]*)\\.html",
+      page:"/index.html"
+    },
+    {
+      name:"search",
+      url:"/search/keyword\\.html",
+      page:"/index.html"
+    },
+    {
+      name:"tag",
+      url:"/search/tag\\.html",
+      page:"/index.html"
+    },
+    {
+      name:"detail",
+      url:"/article/(\\d+)\\.html",
+      page:"/detail.html"
     }
   ]
 }
@@ -61,6 +95,14 @@
 		  <li>
 				<p>version</p>
 				<code><p>可不写，后期预留扩展</p></code>
+			</li>
+		  <li>
+				<p>debug</p>
+				<code><p> true 的时候将会打印所有接口调用的调试信息，正式环境建议设置为 false </p></code>
+			</li>
+		  <li>
+				<p>定义变量</p>
+				<code><p>例如上面配置文件中的 domain ，定义后，再下面可以直接引用该变量，简化配置</p></code>
 			</li>
 		  <li>
 				<p>apis</p>
@@ -111,21 +153,55 @@
 					<p>接口返回的数据类型，目前支持 string、json、jsonArray ，分别代表：字符串、json对象、json对象的数组【不配置该参数，默认为 string】</p>
 				</code>
 			</li>
+		  <li>
+				<p>rewrites</p>
+				<code>
+					<p>支持伪静态链接定义，每个 {} 为一个 rewrite 配置单元，多个配置单元用英文逗号分隔，具体参数详见下面的说明 </p>
+				</code>
+			</li>
+		  <li>
+				<p>name</p>
+				<code>
+					<p>名称，可在页面中通过 Request.rewriteName  获取该参数的值</p>
+				</code>
+			</li>
+		  <li>
+				<p>url</p>
+				<code>
+					<p>伪静态链接地址的正式表达式，可定义多个 () 内的内容作为变量提取，在页面上可使用 Request.rewriteParams1、Request.rewriteParams2、Request.rewriteParams3、...  来获取URL中的值</p>
+				</code>
+			</li>
+		  <li>
+				<p>page</p>
+				<code>
+					<p>真实的页面路径</p>
+				</code>
+			</li>
 		</ul>
 		<div class="alert alert-success" role="alert">多个接口配置例子</div>
 		<pre>
 {
   version:"0.0.1",
   apis:[
-    {
-      name:"mobileSegment",
-      url:"https://api.it120.cc/common/mobile-segment/location",
-      method:"get",
-      connectTimeout:30000,
-      readTimeout:30000,
-      params:"",
-      returnType:"json"
-    }
+		{
+			name:"mobileSegment",
+			url:"https://{domain}/common/mobile-segment/location",
+			method:"get",
+			connectTimeout:30000,
+			readTimeout:30000,
+			params:"",
+			returnType:"json"
+		},
+		{
+			name:"mobileSegmentString",
+			url:"https://{domain}/common/mobile-segment/location",
+			returnType:"string"
+		},
+		{
+			name:"province",
+			url:"https://{domain}/common/region/province",
+			returnType:"json"
+		}
   ]
 }
 		</pre>
@@ -186,6 +262,22 @@
 			</#list>
 			</ul>
 		</code>
+
+		<div class="alert alert-success" role="alert">常用获取数据方法</div>
+		<h3>获取URL中的参数(xxx.html?a=1&b=2&c=7)</h3>
+		<pre>
+${r"$"}{RequestParameters.a}
+${r"$"}{RequestParameters.b}
+${r"$"}{RequestParameters.c}
+		</pre>
+		<h3>中文进行 URLEncode 编码</h3>
+		<pre>
+${r"$"}{urlEncode("测试", 0)}
+		</pre>
+		<h3>中文进行 URLDecode 解码</h3>
+		<pre>
+${r"$"}{urlEncode("%e6%b5%8b%e8%af%95", 1)}
+		</pre>
 
 		<h2>立马试试吧</h2>
 		<ul>

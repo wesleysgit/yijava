@@ -1,6 +1,8 @@
 package cc.it120.www.servletFreemarker.method;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -10,8 +12,12 @@ import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
 
 public class BaseApiTemplateMethodModelEx implements TemplateMethodModelEx {
+	private static final Pattern PATTERN = Pattern.compile("\\{(.*)\\}");
+	public static boolean IS_DEBUG = true;
 	
+	private JSONObject parentJson;
 	private JSONObject apiJson;
+	
 	private String url;
 	private String method;
 	private int connectTimeout;
@@ -19,7 +25,8 @@ public class BaseApiTemplateMethodModelEx implements TemplateMethodModelEx {
 	private String paramInit;
 	private String returnType;
 	
-	public BaseApiTemplateMethodModelEx (JSONObject apiJson) {
+	public BaseApiTemplateMethodModelEx (JSONObject apiJson, JSONObject parentJson) {
+		this.parentJson = parentJson;
 		this.apiJson = apiJson;
 		url = getString("url", "");
 		method = getString("method", "get");
@@ -35,12 +42,22 @@ public class BaseApiTemplateMethodModelEx implements TemplateMethodModelEx {
 		if ("".equals(url)) {
 			return "url不能为空";
 		}
+		if (IS_DEBUG) {
+			System.out.println("url:" + url);
+		}
 		StringBuilder build = new StringBuilder();
 		for (Object object : arguments) {
-			build.append("&").append(String.valueOf(object));
+			String param = String.valueOf(object);
+			if (param == null || "".equals(param.trim()) || "null".equals(param.trim())) {
+				continue;
+			}
+			build.append("&").append(param);
 		}
 		if (!"".equals(paramInit)) {
 			build.append("&").append(paramInit);
+		}
+		if (IS_DEBUG) {
+			System.out.println("params:" + (build.length() == 0 ?"" : build.substring(1)));
 		}
 		String resultHtml = null;
 		if ("get".equalsIgnoreCase(method)) {
@@ -49,6 +66,9 @@ public class BaseApiTemplateMethodModelEx implements TemplateMethodModelEx {
 			resultHtml = HttpRequest.sendPost(url, connectTimeout, readTimeout, build.length() == 0 ?"" : build.substring(1));
 		} else {
 			return "暂不支持"+ method +"方法";
+		}
+		if (IS_DEBUG) {
+			System.out.println("result:" + resultHtml);
 		}
 		
 		if ("string".equalsIgnoreCase(returnType)) {
@@ -67,6 +87,11 @@ public class BaseApiTemplateMethodModelEx implements TemplateMethodModelEx {
 		String result = apiJson.getString(key);
 		if (result == null || "".equals(result.trim())) {
 			return defaultStr;
+		}
+		
+		Matcher m = PATTERN.matcher(result);
+		while (m.find()) {
+			result = result.replace(m.group(0), parentJson.getString(m.group(1)));
 		}
 		return result.trim();
 	}
