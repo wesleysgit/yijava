@@ -1,0 +1,13 @@
+------------------------------------------------------------------------------------
+V1.2.0
+------------------------------------------------------------------------------------
+
+1、apis.properties 文件新增 resources 配置，可配置静态资源，如：
+
+resources:[
+  "/images", "/js", "/css", "*.png", "*.jpg"
+]
+
+2、apis.properties 文件增加 serverName 配置，可指定您的服务器类型，支持：Tomcat、Jetty、JBoss、GlassFish、Google App Engine、Resin、WebLogic、WebSphere
+
+3、原先 /category.html 形式的 URL 现在可以支持 /category  直接访问了，考虑到 SEO 的同学有福了 ~

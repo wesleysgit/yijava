@@ -1,7 +1,9 @@
 package cc.it120.www.servletFreemarker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,11 +28,25 @@ public class FreemarkerServlet extends freemarker.ext.servlet.FreemarkerServlet 
 	public static Map<String, BaseApiTemplateMethodModelEx> FREEMARKER_EXT_METHODS = new HashMap<>();
 	public static JSONArray REWRITE_ARRAYS;
 	private static UrlEncodeMethod URLENCODEMETHOD = new UrlEncodeMethod();
+	public static List<String> RESOURCES = new ArrayList<>();
+	public static String DEFAULT_SERVLET_NAME = "default";
 
 	protected boolean preprocessRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		
+		String path = request.getServletPath();
+		if (path == null || "".equals(path)) {
+			return false;
+		}
+		for (String resource : RESOURCES) {
+			if (path.startsWith(resource) || path.endsWith(resource)) {
+				this.getServletContext().getNamedDispatcher(DEFAULT_SERVLET_NAME).forward(request, response);
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -61,6 +77,9 @@ public class FreemarkerServlet extends freemarker.ext.servlet.FreemarkerServlet 
 					return rewrite.getString("page");
 				}
 			}
+		}
+		if (!templatePath.endsWith(".html")) {
+			templatePath += ".html";
 		}
 		return templatePath;
 	}

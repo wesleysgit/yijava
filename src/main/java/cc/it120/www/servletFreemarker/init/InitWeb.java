@@ -26,7 +26,30 @@ public class InitWeb implements ServletContextListener {
 				build.append(line.trim());
 			}
 			JSONObject json = JSONObject.parseObject(build.toString());
+			String serverName = json.getString("serverName");
+			if (serverName == null || "".equals(serverName)) {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "default";
+			} else if ("Tomcat".equalsIgnoreCase(serverName) || "Jetty".equalsIgnoreCase(serverName) || "JBoss".equalsIgnoreCase(serverName) || "GlassFish".equalsIgnoreCase(serverName)) {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "default";
+			} else if ("gae".equalsIgnoreCase(serverName)) { // Google App Engine
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "_ah_default";
+			} else if ("Resin".equalsIgnoreCase(serverName)) {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "resin-file";
+			} else if ("WebLogic".equalsIgnoreCase(serverName)) {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "FileServlet";
+			} else if ("WebSphere".equalsIgnoreCase(serverName)) {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "SimpleFileServlet";
+			} else {
+				FreemarkerServlet.DEFAULT_SERVLET_NAME = "default";
+			}
 			BaseApiTemplateMethodModelEx.IS_DEBUG = json.getBooleanValue("debug");
+			JSONArray resources = json.getJSONArray("resources");
+			if (resources != null) {
+				for (Object object : resources) {
+					FreemarkerServlet.RESOURCES.add((String) object);
+				}
+			}
+			
 			JSONArray apis = json.getJSONArray("apis");
 			for (Object object : apis) {
 				JSONObject api = (JSONObject) object;

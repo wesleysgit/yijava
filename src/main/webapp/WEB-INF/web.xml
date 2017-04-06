@@ -63,7 +63,6 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>freemarker</servlet-name>
-		<url-pattern>*.html</url-pattern>
-		<url-pattern>*.htm</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>	
 </web-app>

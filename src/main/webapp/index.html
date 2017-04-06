@@ -44,7 +44,11 @@
 {
   version:"0.1.0",
   debug:false,
+  serverName:"tomcat",
   domain:"api.it120.cc",
+  resources:[
+    "/images", "/js", "/css", "*.png", "*.jpg"
+  ],
   apis:[
   {
     name:"mobileSegment",
@@ -99,6 +103,14 @@
 		  <li>
 				<p>debug</p>
 				<code><p> true 的时候将会打印所有接口调用的调试信息，正式环境建议设置为 false </p></code>
+			</li>
+		  <li>
+				<p>serverName</p>
+				<code><p>服务器类型，支持：Tomcat、Jetty、JBoss、GlassFish、Google App Engine、Resin、WebLogic、WebSphere</p></code>
+			</li>
+		  <li>
+				<p>resources</p>
+				<code><p>配置静态资源："/images" 代表 该目录下的文件为静态资源；*.png 代表所有的 png 后缀的请求为静态资源</p></code>
 			</li>
 		  <li>
 				<p>定义变量</p>
