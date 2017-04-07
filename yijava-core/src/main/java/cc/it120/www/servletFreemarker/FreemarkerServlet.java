@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 
 import cc.it120.www.servletFreemarker.method.BaseApiTemplateMethodModelEx;
 import cc.it120.www.servletFreemarker.method.UrlEncodeMethod;
+import cc.it120.www.servletFreemarker.util.CookieUtil;
 import freemarker.ext.servlet.AllHttpScopesHashModel;
 import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateModel;
@@ -38,15 +40,15 @@ public class FreemarkerServlet extends freemarker.ext.servlet.FreemarkerServlet 
 		response.setCharacterEncoding("utf-8");
 		
 		String path = request.getServletPath();
-		if (path == null || "".equals(path)) {
-			return false;
-		}
-		for (String resource : RESOURCES) {
-			if (path.startsWith(resource) || path.endsWith(resource)) {
-				this.getServletContext().getNamedDispatcher(DEFAULT_SERVLET_NAME).forward(request, response);
-				return true;
+		if (!Strings.isNullOrEmpty(path)) {
+			for (String resource : RESOURCES) {
+				if (path.startsWith(resource) || path.endsWith(resource)) {
+					this.getServletContext().getNamedDispatcher(DEFAULT_SERVLET_NAME).forward(request, response);
+					return true;
+				}
 			}
 		}
+		request.setAttribute("cookie", new CookieUtil(request, response));
 		return false;
 	}
 

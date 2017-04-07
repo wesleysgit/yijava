@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<h1>易框架 <small>V 1.2.0</small></h1>
+		<h1>易框架 <small>V 2.0.0</small></h1>
 		<blockquote>
 		  <p>轻量级JAVA开发框架，整个框架部署war包只有1.8MB，但是功能并不逊色</p>
 		  <p>有接口，即可极速建站，无需数据库，无需 JAVA 编程基础，甚至可以 0 代码即可制作精美的PC或者手机端网站。</p>
@@ -160,6 +160,12 @@
 				</code>
 			</li>
 		  <li>
+				<p>cacheSeconds</p>
+				<code>
+					<p>接口获取数据后在内存中缓存多少时间（单位为秒），超过这个时间后才重新到接口获取，提高体验速度、降低接口压力</p>
+				</code>
+			</li>
+		  <li>
 				<p>returnType</p>
 				<code>
 					<p>接口返回的数据类型，目前支持 string、json、jsonArray ，分别代表：字符串、json对象、json对象的数组【不配置该参数，默认为 string】</p>
@@ -174,13 +180,13 @@
 		  <li>
 				<p>name</p>
 				<code>
-					<p>名称，可在页面中通过 Request.rewriteName  获取该参数的值</p>
+					<p>名称，可在页面中通过 rewriteName  获取该参数的值</p>
 				</code>
 			</li>
 		  <li>
 				<p>url</p>
 				<code>
-					<p>伪静态链接地址的正式表达式，可定义多个 () 内的内容作为变量提取，在页面上可使用 Request.rewriteParams1、Request.rewriteParams2、Request.rewriteParams3、...  来获取URL中的值</p>
+					<p>伪静态链接地址的正式表达式，可定义多个 () 内的内容作为变量提取，在页面上可使用 rewriteParams1、rewriteParams2、rewriteParams3、...  来获取URL中的值</p>
 				</code>
 			</li>
 		  <li>
