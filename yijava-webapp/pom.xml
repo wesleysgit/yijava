@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cc.it120.www</groupId>
+		<artifactId>yijava-parent</artifactId>
+		<version>${yijava.version}</version>
+	</parent>
+	<artifactId>yijava-webapp</artifactId>
+	<packaging>war</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>cc.it120.www</groupId>
+			<artifactId>yijava-core</artifactId>
+			<version>${yijava.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<path>/</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<useBodyEncodingForURI>true</useBodyEncodingForURI>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

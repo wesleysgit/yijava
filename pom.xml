@@ -1,12 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>cc.it120.www</groupId>
-	<artifactId>yijava</artifactId>
-	<version>1.2.0</version>
-	<packaging>war</packaging>
-	<description>轻量级JAVA开发框架，整个框架部署war包只有1.8MB，但是功能并不逊色，https://github.com/gooking/yijava</description>
-	<dependencies>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <properties>
+    <yijava.version>1.2.1</yijava.version>
+  </properties>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>cc.it120.www</groupId>
+	<artifactId>yijava-parent</artifactId>
+  <version>${yijava.version}</version>
+  <packaging>pom</packaging>
+  <name>YiJava</name>
+  <url>https://github.com/gooking/yijava</url>
+  <description>轻量级JAVA-J2EE开发框架，整个框架部署war包只有2.1MB，但是功能并不逊色，https://github.com/gooking/yijava</description>
+  <modules>
+    <module>yijava-core</module>
+    <module>yijava-webapp</module>
+  </modules>
+  <dependencies>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -23,37 +32,25 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>21.0</version>
+		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<port>8080</port>
-					<path>/</path>
-					<uriEncoding>UTF-8</uriEncoding>
-					<useBodyEncodingForURI>true</useBodyEncodingForURI>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-		</plugins>
-		<!-- <resources> <resource> <directory>src/main/java</directory> <includes> 
-			<include>**/*.properties</include> <include>**/*.xml</include> </includes> 
-			<filtering>false</filtering> </resource> <resource> <directory>src/main/resources</directory> 
-			<includes> <include>*.properties</include> <include>*.xml</include> </includes> 
-			<filtering>false</filtering> </resource> </resources> -->
-	</build>
-	<name>易框架</name>
-	<url>https://github.com/gooking/yijava</url>
+  <build>
+  	<plugins>
+  		<plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-compiler-plugin</artifactId>
+             <version>3.6.1</version>
+             <configuration>
+                 <source>1.8</source>
+                 <target>1.8</target>
+                 <encoding>UTF-8</encoding>
+             </configuration>
+         </plugin>
+  	</plugins>
+  </build>
+
 </project>
